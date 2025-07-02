@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sentiment Analysis</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #4f46e5;
+            --background: #f8fafc;
+            --text-color: #1e293b;
+            --box-shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: var(--background);
+            color: var(--text-color);
+            line-height: 1.6;
+            max-width: 960px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        form {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px var(--box-shadow);
+            margin-bottom: 2rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        form:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px -2px var(--box-shadow);
+        }
+
+        input[type="file"], input[type="text"] {
+            padding: 0.75rem;
+            border: 2px solid var(--input-border-color);
+            border-radius: 8px;
+            width: 70%;
+            margin-right: 1rem;
+            transition: border-color 0.2s ease;
+            font-size: 1rem;
+        }
+
+        input[type="file"]:hover, input[type="text"]:hover {
+            border-color: var(--input-hover-border-color);
+        }
+
+        input[type="submit"] {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+
+        .results-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .output, .chart {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px var(--box-shadow);
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .output h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+
+        @media (max-width: 768px) {
+            .results-container {
+                flex-direction: column;
+            }
+
+            input[type="file"], input[type="text"] {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+
+            input[type="submit"] {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+  <h1>Twitter Sentiment Analysis</h1>
+  <form method="post" action="/analyze_query">
+    <label for="query">Enter a Query for Sentiment Analysis:</label>
+    <input type="text" name="query" placeholder="Enter your query" required>
+    <input type="submit" value="Analyze Query">
+</form>
+
+{% if query_result %}
+    {% if "[ERROR]" in query_result %}
+        <div class="error">{{ query_result }}</div>
+    {% else %}
+        <div class="results-container">
+            <div class="output">
+                <h2>Query Sentiment Analysis Result</h2>
+                <div>{{ query_result|safe }}</div>
+            </div>
+
+        </div>
+    {% endif %}
+{% endif %}
+
+  <form method="post" enctype="multipart/form-data" action="/analyze_file">
+      <label for="file">Upload Tweet File (.txt):</label>
+      <input type="file" name="file" accept=".txt" required>
+      <input type="submit" value="Analyze File">
+  </form>
+
+  {% if file_result %}
+      {% if "[ERROR]" in file_result %}
+          <div class="error">{{ file_result }}</div>
+      {% else %}
+          <div class="results-container">
+              <div class="output">
+                  <h2>File Sentiment Analysis Result</h2>
+                  <div>{{ file_result.replace('\n', '<br>')|safe }}</div>
+              </div>
+              <div class="chart">
+                  <h2>Sentiment Chart</h2>
+                  <img src="{{ url_for('static', filename='sentiment_pie.png') }}?t={{ timestamp }}" alt="File Sentiment Pie Chart" width="100%">
+              </div>
+          </div>
+      {% endif %}
+  {% endif %}
+
+
+
+</body>
+
+</html>
