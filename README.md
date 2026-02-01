@@ -1,104 +1,149 @@
-Here are details to add to a README file for your Twitter sentiment analysis project:
+📊 Twitter Sentiment Analysis
+📌 Project Overview
+This project analyzes Twitter data to understand public sentiment using machine learning–based sentiment classification and presents insights through an interactive Power BI dashboard. The solution is designed to be dataset-agnostic, meaning it works with any compatible sentiment CSV file.
 
-Twitter Sentiment Analysis with Hadoop Streaming
-Project Overview
-This project implements a scalable sentiment analysis pipeline for Twitter data, utilizing Hadoop Streaming and a pre-trained machine learning model. It provides functionalities for analyzing text files containing multiple tweets and individual user queries through a Flask-based web interface.
+**The project demonstrates an end-to-end analytics workflow, combining ML/NLP concepts, backend processing with Flask, and business intelligence visualization using Power BI.
+**
+🎯** Project Objectives**
+    1.Analyze Twitter sentiment data (Positive, Negative, Neutral, Irrelevant)
+    2.Apply machine learning–based sentiment classification results
+    3.Visualize sentiment distribution and counts
+    4.Enable interactive filtering and drill-down analysis
+    5.Build a reusable, portfolio-ready Power BI dashboard
 
-Features
+📁 **Project Folder Structure**
+Twitter_Sentiment_Analysis/
+│
+├── app.py
+├── export_sentiment.py
+├── run_sentiment_pipeline.py
+├── mapper.py
+├── reducer.py
+├── sentiment_job/
+│
+├── data/
+│   └── twitter_training.csv
+│
+├── sentiment_results.csv
+├── sentiment_model.joblib
+├── vectorizer.joblib
+│
+├── Power BI/
+│   └── Twitter_Sentiment_Analysis.pbix
+│
+├── templates/
+├── static/
+│
+├── screenshots/
+│   ├── dashboard_overview.png
+│   ├── sentiment_distribution.png
+│   └── filtered_view.png
+│
+├── .gitattributes
+├── .gitignore
 
-Scalable Sentiment Analysis: Processes large tweet datasets efficiently using Hadoop Streaming for distributed computing.
+📂 Dataset Description
 
+The dataset used in this project contains the following columns:
 
-Machine Learning Integration: Employs a pre-trained Logistic Regression model and TF-IDF vectorizer for accurate positive/negative sentiment classification.
+  1.Column Name	Description
+  2.TweetID	Unique identifier for each tweet
+  3.Sentiment	Sentiment label (Positive, Negative, Neutral, Irrelevant)
+  4.TweetText	Tweet content
+  5.TweetDate	Date column added during preprocessing
 
+✅ The dashboard does not rely on topic-specific columns, making it compatible with a wide range of sentiment datasets.
 
-Text Preprocessing: Includes robust cleaning functions to handle URLs, mentions, hashtags, punctuation, and numerical digits in tweets.
+🧠 Key Features
 
+  1.Machine Learning–Based Sentiment Analysis
+  2.Uses ML-generated sentiment labels as input
+  3.Interactive Power BI Dashboard
+  4.Sentiment distribution (donut chart)
+  5.Sentiment counts (bar chart)
+  6.KPI cards (Total Tweets, Positive %, Negative & Neutral counts)
+  7.Dynamic Filtering
+  8.Filter by sentiment and date
+  9.Tweet-Level Drill Down
+  10.View individual tweet text with sentiment labels
+  11.Dataset-Agnostic Design
+  12.Works with any CSV containing sentiment and text columns
 
-Web Interface (Flask): An interactive web application allows users to upload .txt files for batch analysis or input single queries for real-time sentiment prediction.
+📊 Power BI Dashboard
 
+An interactive Power BI dashboard was built to visualize insights clearly and intuitively.
 
-Sentiment Distribution Visualization: Generates a pie chart (sentiment_pie.png) visualizing the overall sentiment distribution from file analysis.
+🔹 Dashboard Overview
+🔹 Sentiment Distribution
+🔹 Filtered View
 
+🛠️ Tech Stack
+🔹 Machine Learning & NLP
+    1.Machine Learning–Based Sentiment Classification
+    2.Natural Language Processing (NLP)
+    3.Pre-labeled / ML-generated sentiment outputs
 
-Top Word Extraction: Identifies and lists the top 10 most frequent positive and negative words from analyzed data.
+🔹 Backend & Application Layer
+    1.Python
+    2.Flask – backend integration and data flow
+    3.Pandas – CSV data processing and manipulation
 
+🔹 Data Visualization & BI
+   1.Power BI Desktop
+   2.Power Query – data cleaning & schema normalization
 
-Modular Design: The pipeline is structured with distinct mapper.py and reducer.py scripts for clarity and Hadoop compatibility.
+DAX – KPI calculations and measures
 
+🔹 Data & Tools
 
-Technologies Used
-Python 3 
+CSV Data Source
 
-Flask 
+1.VS Code
+2.Git & GitHub
 
-Hadoop Streaming 
+🔄 End-to-End Workflow
 
-NLTK (for tokenization, stopwords) 
+1.Tweet text is analyzed using ML/NLP sentiment classification
+2.Data is processed using Python & Pandas
+3.Flask manages backend integration
+4.Cleaned data is loaded into Power BI
+5.Power Query normalizes schema
+6.DAX powers interactive KPIs and visuals
+7.Dashboard insights are exported as screenshots for GitHub
 
-Scikit-learn (Logistic Regression, TF-IDF) 
+📈 DAX Measures Used
 
-Joblib (model persistence) 
+1.Total Tweets
+2.Positive Tweets
+3.Positive Percentage
+4.Negative Tweets
+5.Neutral Tweets
 
-Matplotlib (for visualizations) 
+Measures are written to handle filters and missing values gracefully.
 
-Project Structure
+🚀 How to Run the Project
 
-app.py: Main Flask application handling web routes, file uploads, query analysis, and pipeline execution.
+1.Clone the repository
+2.Open the .pbix file using Power BI Desktop
+3.Load the CSV file from the data/ folder (or replace with your own)
+4.Ensure required columns exist (Sentiment, TweetText, TweetID)
+5.Apply changes — the dashboard updates automatically
+6.(Optional) Export as a Power BI Template (.pbit) for reuse.
 
-mapper.py: Hadoop mapper; cleans text, predicts sentiment, and emits data for sentiment counts and word counts. Also generates the sentiment distribution pie chart.
+PowerBI Dashboard:
+Distribution of all the sentiments:
+<img width="1148" height="637" alt="image" src="https://github.com/user-attachments/assets/92aab078-6321-40a1-8b79-bc5384952005" />
 
+Sentiment: Negative 
+<img width="1152" height="637" alt="image" src="https://github.com/user-attachments/assets/2fdd7ab7-ed2a-45fc-b67f-6028a7c52fcd" />
 
-reducer.py: Hadoop reducer; aggregates sentiment and word counts, then outputs distribution and top words.
+Sentiment: Positive
+<img width="1151" height="642" alt="image" src="https://github.com/user-attachments/assets/3c26166d-b9f8-477d-a542-f61e33441e5b" />
 
+Sentiment: Neutral
+<img width="1158" height="632" alt="image" src="https://github.com/user-attachments/assets/9d9d5142-5d53-4535-bf7f-1bbd9fe56cc5" />
 
-run_sentiment_pipeline.py: Orchestrates the Hadoop Streaming job, managing HDFS interactions.
+Sentiment: irrelevant
+<img width="1146" height="638" alt="image" src="https://github.com/user-attachments/assets/3ab6cdb5-b683-4c2b-9b19-746bd40d90b3" />
 
-
-sentiment_job/: Contains mapper.py, reducer.py, sentiment_model.joblib, vectorizer.joblib, and uploaded tweets.txt.
-
-
-static/: Stores generated static files, like sentiment_pie.png.
-
-
-templates/: Contains index.html for the web interface.
-
-Setup and Installation
-Prerequisites:
-
-Apache Hadoop installed and configured.
-
-Python 3 and pip.
-
-NLTK data (
-
-punkt, stopwords) (handled by mapper.py on first run).
-
-Steps:
-
-Clone the repository:
-
-Bash
-
-git clone <repository_url>
-cd <repository_name>
-Install Python dependencies:
-
-Bash
-
-pip install -r requirements.txt
-(Create a requirements.txt file with: Flask, scikit-learn, joblib, nltk, matplotlib)
-
-Place pre-trained model/vectorizer: Ensure sentiment_model.joblib and vectorizer.joblib are in the sentiment_job/ directory.
-
-Configure Hadoop paths: Update HADOOP_JAR in run_sentiment_pipeline.py to your hadoop-streaming-x.x.x.jar path. Adjust 
-
-HDFS_INPUT and HDFS_OUTPUT as needed.
-
-Run the Flask application:
-
-Bash
-
-python app.py
-Access the web interface: Open your browser to http://localhost:5000.
 
